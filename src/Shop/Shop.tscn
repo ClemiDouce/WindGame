@@ -1,0 +1,22 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://src/Shop/Shop.gd" type="Script" id=2]
+[ext_resource path="res://good_theme.tres" type="Theme" id=5]
+
+[node name="Shop" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_right = -590.0
+margin_bottom = -1149.0
+theme = ExtResource( 5 )
+script = ExtResource( 2 )
+
+[node name="ShopBuild" type="TextureButton" parent="."]
+margin_right = 64.0
+margin_bottom = 64.0
+rect_scale = Vector2( 0.3, 0.3 )
+__meta__ = {
+"_edit_lock_": true
+}
+
+[connection signal="pressed" from="ShopBuild" to="." method="_on_ShopBuild_pressed"]

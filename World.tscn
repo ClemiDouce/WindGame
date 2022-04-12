@@ -1,109 +1,283 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=23 format=2]
 
 [ext_resource path="res://World.gd" type="Script" id=1]
-[ext_resource path="res://assets/sprites/pales.png" type="Texture" id=2]
-[ext_resource path="res://assets/sprites/back.png" type="Texture" id=3]
+[ext_resource path="res://assets/sprites/eolienne/EoliennePiedV2.png" type="Texture" id=2]
+[ext_resource path="res://assets/sprites/sol.png" type="Texture" id=3]
 [ext_resource path="res://assets/fonts/interface.tres" type="DynamicFont" id=4]
-[ext_resource path="res://WindScene.gd" type="Script" id=5]
+[ext_resource path="res://src/Scene/WindScene.gd" type="Script" id=5]
+[ext_resource path="res://assets/sprites/shops/artflow_202204081433.png" type="Texture" id=6]
+[ext_resource path="res://src/Shop/Shop.tscn" type="PackedScene" id=7]
+[ext_resource path="res://src/Scene/CityScene.gd" type="Script" id=8]
+[ext_resource path="res://assets/fonts/m6x11.ttf" type="DynamicFontData" id=9]
+[ext_resource path="res://assets/sprites/shops/Shop_muscle.tres" type="Texture" id=10]
+[ext_resource path="res://assets/sprites/shops/forge_windpng.png" type="Texture" id=11]
+[ext_resource path="res://src/Item/Item.gd" type="Script" id=12]
+[ext_resource path="res://good_theme.tres" type="Theme" id=14]
+[ext_resource path="res://src/NuageGenerator/NuageGenerator.tscn" type="PackedScene" id=16]
+[ext_resource path="res://assets/sprites/eolienne/rotor.png" type="Texture" id=17]
+[ext_resource path="res://assets/sprites/eolienne/lesPales.png" type="Texture" id=18]
+
+[sub_resource type="Resource" id=1]
+script = ExtResource( 12 )
+title = "Proteine"
+description = "Pour plus de force dans les bras"
+price = 100
+
+[sub_resource type="Resource" id=2]
+script = ExtResource( 12 )
+title = "Haltere"
+description = "Pour produire plus de vent"
+price = 100
+
+[sub_resource type="Resource" id=3]
+script = ExtResource( 12 )
+title = "Huile Eolienne"
+description = "Augmente la rotation maximale"
+price = 100
+
+[sub_resource type="Resource" id=4]
+script = ExtResource( 12 )
+title = "Nouvelles pales"
+description = "Augmente la prise au vent"
+price = 200
+
+[sub_resource type="Resource" id=6]
+script = ExtResource( 12 )
+title = "Batterie"
+description = "Pour stocker plus d'energie"
+price = 200
+
+[sub_resource type="DynamicFont" id=5]
+size = 64
+font_data = ExtResource( 9 )
 
 [node name="World" type="Node2D"]
 position = Vector2( 0, -3 )
 script = ExtResource( 1 )
+
+[node name="NuageGenerator" parent="." instance=ExtResource( 16 )]
+gen_range = 100
+nuage_delay = 6.0
+
+[node name="EndPosition" parent="NuageGenerator" index="2"]
+position = Vector2( 0, 690 )
 
 [node name="Camera2D" type="Camera2D" parent="."]
 anchor_mode = 0
 current = true
 smoothing_enabled = true
 smoothing_speed = 3.0
-offset_h = 0.02
 
-[node name="WindScene" type="Node2D" parent="."]
-script = ExtResource( 5 )
+[node name="Pied" type="Sprite" parent="."]
+position = Vector2( 529, 686.5 )
+scale = Vector2( 1, 2.56134 )
+texture = ExtResource( 2 )
 
-[node name="Background" type="Sprite" parent="WindScene"]
-scale = Vector2( 2.2, 2.2 )
+[node name="Background" type="Sprite" parent="."]
+position = Vector2( 0, 3 )
 texture = ExtResource( 3 )
 centered = false
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="WindScene" type="Node2D" parent="."]
+position = Vector2( 0, 3 )
+script = ExtResource( 5 )
+__meta__ = {
+"_edit_lock_": true
+}
 
 [node name="Pales" type="Sprite" parent="WindScene"]
-position = Vector2( 362, 377 )
+position = Vector2( 523.586, 348.21 )
 rotation = 1.74846e-07
-scale = Vector2( 2.2, 2.2 )
+scale = Vector2( 0.7, 0.7 )
+texture = ExtResource( 18 )
+offset = Vector2( -4.28571, 23.1998 )
+hframes = 4
+frame = 2
+
+[node name="OmbrePied2" type="Sprite" parent="WindScene"]
+modulate = Color( 0, 0, 0, 0.501961 )
+position = Vector2( 306, 1243 )
+rotation = -2.62635
+scale = Vector2( 1, 2.09099 )
 texture = ExtResource( 2 )
-offset = Vector2( -6.40886, -12.1075 )
+
+[node name="OmbrePale" type="Sprite" parent="WindScene"]
+modulate = Color( 0, 0, 0, 0.490196 )
+position = Vector2( 180.056, 1491.07 )
+rotation = 0.10821
+scale = Vector2( 0.711812, 0.788611 )
+texture = ExtResource( 18 )
+offset = Vector2( -8.57257, -18.626 )
+flip_v = true
+hframes = 4
+frame = 2
+
+[node name="OmbrePied1" type="Sprite" parent="WindScene"]
+modulate = Color( 0, 0, 0, 0.501961 )
+position = Vector2( 502, 971 )
+rotation = -2.62635
+scale = Vector2( 1, 0.367131 )
+texture = ExtResource( 2 )
+
+[node name="Rotor" type="Sprite" parent="WindScene"]
+position = Vector2( 521, 351 )
+texture = ExtResource( 17 )
+
+[node name="WindDelay" type="Timer" parent="WindScene"]
+wait_time = 0.5
+one_shot = true
+
+[node name="ResourceDelay" type="Timer" parent="WindScene"]
+wait_time = 0.5
+autostart = true
 
 [node name="Control" type="Control" parent="WindScene"]
-margin_right = 40.0
-margin_bottom = 40.0
+anchor_right = 1.0
+anchor_bottom = 1.0
 
-[node name="Label" type="Label" parent="WindScene/Control"]
+[node name="WindSpeedLabel" type="Label" parent="WindScene/Control"]
 margin_left = 14.0
-margin_top = 721.0
+margin_top = 1221.0
 margin_right = 162.0
-margin_bottom = 749.0
+margin_bottom = 1249.0
 custom_colors/font_color = Color( 0, 0, 0, 1 )
 custom_fonts/font = ExtResource( 4 )
 text = "Wind Speed: "
 
 [node name="WindSpeed" type="Label" parent="WindScene/Control"]
 margin_left = 156.0
-margin_top = 721.0
+margin_top = 1221.0
 margin_right = 198.0
-margin_bottom = 749.0
+margin_bottom = 1249.0
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_fonts/font = ExtResource( 4 )
+text = "0"
+
+[node name="MoneyLabel" type="Label" parent="WindScene/Control"]
+margin_left = 508.0
+margin_top = 1221.0
+margin_right = 656.0
+margin_bottom = 1249.0
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_fonts/font = ExtResource( 4 )
+text = "Money: "
+
+[node name="Money" type="Label" parent="WindScene/Control"]
+margin_left = 650.0
+margin_top = 1221.0
+margin_right = 692.0
+margin_bottom = 1249.0
 custom_colors/font_color = Color( 0, 0, 0, 1 )
 custom_fonts/font = ExtResource( 4 )
 text = "0"
 
 [node name="CityScene" type="Node2D" parent="."]
 position = Vector2( 0, 1280 )
-
-[node name="Background2" type="Sprite" parent="CityScene"]
-scale = Vector2( 2.2, 2.2 )
-texture = ExtResource( 3 )
-centered = false
-
-[node name="Pales2" type="Sprite" parent="CityScene"]
-position = Vector2( 362, 377 )
-rotation = 1.74846e-07
-scale = Vector2( 2.2, 2.2 )
-texture = ExtResource( 2 )
-offset = Vector2( -6.40886, -12.1075 )
+script = ExtResource( 8 )
+__meta__ = {
+"_edit_lock_": true
+}
 
 [node name="Control" type="Control" parent="CityScene"]
-margin_right = 40.0
-margin_bottom = 40.0
+margin_left = 3.0
+margin_top = -2.0
+margin_right = 723.0
+margin_bottom = 1277.0
+rect_pivot_offset = Vector2( -2622, -171 )
+mouse_filter = 2
+__meta__ = {
+"_edit_lock_": true
+}
 
-[node name="Label" type="Label" parent="CityScene/Control"]
-margin_left = 14.0
-margin_top = 721.0
-margin_right = 162.0
-margin_bottom = 749.0
-custom_colors/font_color = Color( 0, 0, 0, 1 )
+[node name="Shop_Muscle" parent="CityScene/Control" instance=ExtResource( 7 )]
+margin_left = 17.0
+margin_top = 841.0
+margin_right = -455.0
+margin_bottom = -261.0
+shop_title = "Muscle++"
+shop_items = [ SubResource( 1 ), SubResource( 2 ) ]
+
+[node name="ShopBuild" parent="CityScene/Control/Shop_Muscle" index="0"]
+texture_normal = ExtResource( 10 )
+texture_pressed = ExtResource( 10 )
+texture_hover = ExtResource( 10 )
+texture_disabled = ExtResource( 10 )
+texture_focused = ExtResource( 10 )
+
+[node name="Shop_Forgeron" parent="CityScene/Control" instance=ExtResource( 7 )]
+margin_left = 430.0
+margin_top = 421.0
+margin_right = -160.0
+margin_bottom = -728.0
+shop_title = "Forgeron"
+shop_items = [ SubResource( 3 ), SubResource( 4 ) ]
+
+[node name="ShopBuild" parent="CityScene/Control/Shop_Forgeron" index="0"]
+texture_normal = ExtResource( 11 )
+
+[node name="Shop_Archi" parent="CityScene/Control" instance=ExtResource( 7 )]
+margin_left = 495.0
+margin_top = 853.0
+margin_right = -95.0
+margin_bottom = -296.0
+category = 2
+shop_title = "Architecte"
+shop_items = [ SubResource( 6 ) ]
+
+[node name="ShopBuild" parent="CityScene/Control/Shop_Archi" index="0"]
+rect_scale = Vector2( 0.2, 0.2 )
+texture_normal = ExtResource( 6 )
+
+[node name="ShopInterface" type="Panel" parent="CityScene/Control"]
+visible = false
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -304.0
+margin_top = -538.5
+margin_right = 304.0
+margin_bottom = 569.5
+
+[node name="ShopQuit" type="Button" parent="CityScene/Control/ShopInterface"]
+anchor_left = 1.0
+anchor_right = 1.0
+margin_left = -56.0
+margin_top = 1.0
+margin_right = -28.0
+margin_bottom = 37.0
+rect_scale = Vector2( 2, 2 )
 custom_fonts/font = ExtResource( 4 )
-text = "Wind Speed: "
+text = "X"
 
-[node name="WindSpeed" type="Label" parent="CityScene/Control"]
-margin_left = 156.0
-margin_top = 721.0
-margin_right = 198.0
-margin_bottom = 749.0
-custom_colors/font_color = Color( 0, 0, 0, 1 )
-custom_fonts/font = ExtResource( 4 )
-text = "0"
+[node name="ShopTitle" type="Label" parent="CityScene/Control/ShopInterface"]
+margin_top = 6.0
+margin_right = 608.0
+margin_bottom = 42.0
+custom_fonts/font = SubResource( 5 )
+text = "TemplateTitle"
+align = 1
 
-[node name="ButtonDown" type="Button" parent="."]
-margin_left = 299.0
-margin_top = 1168.0
-margin_right = 387.0
-margin_bottom = 1188.0
-text = "Aller en bas"
+[node name="ItemContainer" type="VBoxContainer" parent="CityScene/Control/ShopInterface"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -276.5
+margin_top = -340.5
+margin_right = 276.5
+margin_bottom = 340.5
+theme = ExtResource( 14 )
+custom_constants/separation = 10
 
-[node name="ButtonUp" type="Button" parent="."]
-margin_left = 299.0
-margin_top = 1354.0
-margin_right = 387.0
-margin_bottom = 1374.0
-text = "Aller en bas"
+[connection signal="timeout" from="WindScene/WindDelay" to="WindScene" method="_on_WindDelay_timeout"]
+[connection signal="timeout" from="WindScene/ResourceDelay" to="WindScene" method="_on_ResourceDelay_timeout"]
+[connection signal="pressed" from="CityScene/Control/ShopInterface/ShopQuit" to="CityScene" method="_on_ShopQuit_pressed"]
 
-[connection signal="pressed" from="ButtonDown" to="." method="_on_ButtonDown_pressed"]
-[connection signal="pressed" from="ButtonUp" to="." method="_on_ButtonUp_pressed"]
+[editable path="NuageGenerator"]
+[editable path="CityScene/Control/Shop_Muscle"]
+[editable path="CityScene/Control/Shop_Forgeron"]
+[editable path="CityScene/Control/Shop_Archi"]

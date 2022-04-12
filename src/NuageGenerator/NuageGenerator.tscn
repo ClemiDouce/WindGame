@@ -1,0 +1,30 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://src/NuageGenerator/NuageGenerator.gd" type="Script" id=1]
+
+[sub_resource type="CanvasItemMaterial" id=7]
+particles_animation = true
+particles_anim_h_frames = 3
+particles_anim_v_frames = 1
+particles_anim_loop = false
+
+[node name="NuageGenerator" type="Position2D"]
+material = SubResource( 7 )
+script = ExtResource( 1 )
+__meta__ = {
+"_gizmo_extents_": 16.6
+}
+gen_range = 200
+nuage_speed = 20
+nuage_delay = 4.0
+
+[node name="Timer" type="Timer" parent="."]
+one_shot = true
+autostart = true
+
+[node name="NuageList" type="Node2D" parent="."]
+
+[node name="EndPosition" type="Position2D" parent="."]
+position = Vector2( 0, 362 )
+
+[connection signal="timeout" from="Timer" to="." method="_on_Timer_timeout"]
